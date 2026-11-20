@@ -1,0 +1,164 @@
+POSTMAN SETUP GUIDE - WHATSAPP MESSAGE API
+===========================================
+
+STEP 1: CREATE A NEW REQUEST
+1. Open Postman
+2. Click "New" button (top left)
+3. Select "HTTP Request"
+4. Name it: "Send WhatsApp Message"
+
+STEP 2: CONFIGURE REQUEST
+1. Method: Select "POST" from the dropdown
+2. URL: http://localhost:8000/send
+
+STEP 3: SET HEADERS
+1. Click the "Headers" tab
+2. Add header:
+   Key: Content-Type
+   Value: application/json
+
+STEP 4: SET REQUEST BODY
+1. Click the "Body" tab
+2. Select "raw" from the options
+3. Select "JSON" from the dropdown (right side of the text area)
+4. Paste the following JSON:
+
+{
+  "phone": "+923001234567",
+  "message": "Hello from WhatsApp API!"
+}
+
+STEP 5: SEND REQUEST
+1. Make sure the server is running (python -m uvicorn main:app --host 0.0.0.0 --port 8000)
+2. Click the "Send" button
+3. Chrome will open automatically and send the message
+
+STEP 6: EXPECTED RESPONSE
+Success response (200 OK):
+{
+  "phone": "+923001234567",
+  "message": "Hello from WhatsApp API!",
+  "status": "sent"
+}
+
+Error response examples:
+- Invalid phone (422):
+  {
+    "detail": "Invalid phone number. Use international format, e.g. +923001234567"
+  }
+
+- Send failed (500):
+  {
+    "detail": "Send failed: [error message]"
+  }
+
+STEP 7: BULK SEND (SEND TO MULTIPLE PEOPLE)
+To send the same message to multiple recipients:
+
+1. Create a new request: "Send Bulk WhatsApp Message"
+2. Method: POST
+3. URL: http://localhost:8000/send-bulk
+4. Headers: Content-Type: application/json
+5. Body (JSON):
+
+{
+  "phones": ["+923001234567", "+923001234568", "03001234569"],
+  "message": "Hello everyone from WhatsApp API!"
+}
+
+Expected response:
+{
+  "results": [
+    {
+      "phone": "+923001234567",
+      "message": "Hello everyone from WhatsApp API!",
+      "status": "sent"
+    },
+    {
+      "phone": "+923001234568",
+      "message": "Hello everyone from WhatsApp API!",
+      "status": "sent"
+    },
+    {
+      "phone": "+923001234569",
+      "message": "Hello everyone from WhatsApp API!",
+      "status": "sent"
+    }
+  ],
+  "total": 3,
+  "successful": 3,
+  "failed": 0
+}
+
+If some phones fail:
+{
+  "results": [
+    {
+      "phone": "+923001234567",
+      "message": "Hello everyone from WhatsApp API!",
+      "status": "sent"
+    },
+    {
+      "phone": "invalid_number",
+      "message": "Hello everyone from WhatsApp API!",
+      "status": "failed: Invalid phone number. Use international format, e.g. +923001234567"
+    }
+  ],
+  "total": 2,
+  "successful": 1,
+  "failed": 1
+}
+
+STEP 8: SAVE REQUEST (OPTIONAL)
+1. Click "Save" button (top right)
+2. Select a collection or create a new one
+3. Name: "WhatsApp API"
+
+STEP 9: CREATE COLLECTION (OPTIONAL)
+1. Click "Collections" tab (left sidebar)
+2. Click "New Collection"
+3. Name: "WhatsApp API"
+4. Add your request to this collection
+
+PHONE NUMBER FORMATS SUPPORTED:
+- International: +923001234567
+- With spaces: +92 300 1234567
+- With dashes: +92-300-1234567
+- With parentheses: +92 (300) 1234567
+- Pakistani local: 03001234567 (auto-converted to +92)
+- With country code: 00923001234567 (auto-converted to +92)
+
+IMPORTANT NOTES:
+- The message length must be between 1-4000 characters
+- pywhatkit requires Chrome to be installed
+- Chrome will open automatically when you send a request
+- Only one message can be sent at a time (messages are queued)
+- For bulk send, messages are sent sequentially to each recipient
+- Wait for Chrome to complete sending before sending another request
+
+TESTING WITH DIFFERENT MESSAGES:
+You can test with different messages by changing the "message" field in the JSON body.
+
+Example 1 - Short message:
+{
+  "phone": "+923001234567",
+  "message": "Test message"
+}
+
+Example 2 - Long message:
+{
+  "phone": "+923001234567",
+  "message": "This is a longer message that you can send through the WhatsApp API. It can be up to 4000 characters long."
+}
+
+Example 3 - Bulk send to multiple recipients:
+{
+  "phones": ["+923001234567", "+923001234568", "03001234569"],
+  "message": "Hello everyone!"
+}
+
+TROUBLESHOOTING:
+- If Chrome doesn't open: Check CHROME_PATH environment variable
+- If request fails: Make sure server is running and Chrome is installed
+- If phone is invalid: Use international format with + sign
+- If message is too long: Keep it under 4000 characters

@@ -1,0 +1,57 @@
+WHATSAPP MESSAGE API - SETUP GUIDE
+===================================
+
+PREREQUISITES:
+- Python 3.15.1 (or higher)
+- Chrome browser installed (default path: C:\Program Files\Google\Chrome\Application\chrome.exe)
+
+INSTALLATION STEPS:
+1. Open PowerShell/CMD in the project directory: "E:\My Data\Project\Whatsapp API"
+2. Install dependencies:
+   pip install -r requirements.txt
+
+RUNNING THE SERVER:
+Option 1: Using Python module (recommended)
+   python -m uvicorn main:app --host 0.0.0.0 --port 8000
+
+Option 2: Using uvicorn directly (if Scripts folder is in PATH)
+   uvicorn main:app --host 0.0.0.0 --port 8000
+
+The server will start on: http://0.0.0.0:8000
+
+
+
+STOPPING THE SERVER:
+Press CTRL+C in the terminal where the server is running
+
+SET CHROME PATH (if different from default):
+Set environment variable CHROME_PATH before running:
+$env:CHROME_PATH = "C:\path\to\chrome.exe"
+Or permanently via System Properties > Environment Variables
+
+API ENDPOINTS:
+POST /send - Send WhatsApp message
+GET /docs - Interactive API documentation (Swagger UI)
+GET /openapi.json - OpenAPI schema
+
+FILES:
+- main.py - FastAPI application
+- requirements.txt - Python dependencies
+
+
+
+{
+  "phones": ["03035609341", "+923163388150"],
+  "message": "Greetings,\nAssalam-o-Alaikum!\nWe extend our appreciation for your application to Hashim Medical City (HMC) Hospital, Hyderabad.\n\nYou are cordially invited to participate in the Interview for the Position Full stack developer scheduled for 3:30 PM on January 20, 2026 (Tuesday). The venue location can be found on Google Maps through the following link: https://g.co/kgs/KkcVsga\n\nKindly confirm your availability through the provided contact details.\n\nFeel free to reach out to us at 03268184415 & 022-3418810 or via email at careers@hmchyd.org if you have any inquiries or require rescheduling.\n\nNote: Please ensure to bring along an updated CV/Resume, Active PMDC, CNIC with academic documents, and experience certificates.\n\nThank you,\nHuman Resources\nHMC"
+}
+
+
+
+
+
+start "" "C:\Program Files\Google\Chrome\Application\Chrome.exe" --remote-debugging-port=9222 --user-data-dir="D:\Whatsapp API\ChromeProfile"
+
+python -m uvicorn main:app --host 0.0.0.0 --port 8000
+
+
+http://127.0.0.1:8000/docs?utm_source=chatgpt.com#/

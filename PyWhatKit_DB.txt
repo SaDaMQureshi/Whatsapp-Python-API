@@ -1,0 +1,20 @@
+Date: 19/11/2026
+Time: 15:43
+Phone Number: +923035609341
+Message: Your message here
+--------------------
+Date: 19/11/2026
+Time: 15:43
+Phone Number: +923163388150
+Message: Your message here
+--------------------
+Date: 19/11/2026
+Time: 15:45
+Phone Number: +923035609341
+Message: hello from the Whatsapp Python API from Sadam Qureshi
+--------------------
+Date: 19/11/2026
+Time: 15:45
+Phone Number: +923163388150
+Message: hello from the Whatsapp Python API from Sadam Qureshi
+--------------------
